@@ -11,6 +11,7 @@ const crypto = require('crypto')
 
 const users = require('./usermodel')                              //students in college
 const registerloginmodel = require('./registerloginmodel')
+const aluminimodel = require('./aluminimodel')
 const teachersmodel = require('./teachersmodel')
 const feedbackmodel = require('./feedbackmodel')
 const supportteammodel = require('./supportteammodel');
@@ -22,21 +23,9 @@ const app = express();
 
 dotenv.config()
 const PORT = process.env.PORT || 5000
-
-
-// mongoose.connect(process.env.CONNECTION_URL).then(
-//     ()=> console.log('Db connected..')
-// )
-
-const connectDB = async () => {
-    try {
-      const conn = await mongoose.connect(process.env.CONNECTION_URL);
-      console.log(`MongoDB Connected: ${conn.connection.host}`);
-    } catch (error) {
-      console.log(error);
-      process.exit(1);
-    }
-  }
+mongoose.connect(process.env.CONNECTION_URL).then(
+    ()=> console.log('Db connected..')
+)
 
 app.use(express.json());
 app.use(cors({origin:"*"}));
@@ -49,13 +38,6 @@ app.use(cors({origin:"*"}));
 app.get('/',(req,res)=>{
     res.send('Hello to VJIT Feedback API 25-12-2022 11:56');
 })
-
-
-
-
-
-
-
 
 
 
@@ -821,10 +803,4 @@ app.post('/addOEteacher',async(req,res)=>{
 
 
 
-// app.listen(PORT,()=> console.log('Server is Running..'))
-
-connectDB().then(() => {
-    app.listen(PORT, () => {
-        console.log("server is running");
-    })
-})
+app.listen(PORT,()=> console.log('Server is Running..'))
